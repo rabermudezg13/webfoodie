@@ -319,3 +319,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Ne
   font-size: 9px !important;
   opacity: 0.6;
 }
+
+
+/* Fix: location-search-wrap flex override */
+.location-search-wrap { display: flex !important; flex-direction: row !important; gap: 8px !important; align-items: stretch !important; }
+.location-search-wrap .field-input { width: auto !important; flex: 1 !important; margin-bottom: 0 !important; }
+.loc-search-btn { display: flex !important; align-items: center !important; justify-content: center !important; }
