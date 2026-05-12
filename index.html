@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <div class="nav-brand">
@@ -17,61 +19,77 @@
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
           <path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
         </svg>
-        <span>Añadir</span>
+        <span>Add place</span>
       </button>
     </div>
   </nav>
+
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <p class="hero-eyebrow">Tu guía personal</p>
-      <h1 class="hero-title">Lugares<br /><em>favoritos</em></h1>
-      <p class="hero-sub">Guarda, valora y descubre los platos que te enamoran.</p>
+      <p class="hero-eyebrow">Your personal guide</p>
+      <h1 class="hero-title">Favorite<br /><em>places</em></h1>
+      <p class="hero-sub">Save, rate and discover the dishes you love.</p>
     </div>
     <div class="hero-blur-1"></div>
     <div class="hero-blur-2"></div>
   </section>
+
+  <!-- STATS BAR -->
   <section class="stats-bar">
-    <div class="stat-pill"><span class="stat-val" id="stat-total">0</span><span class="stat-lbl">lugares</span></div>
+    <div class="stat-pill"><span class="stat-val" id="stat-total">0</span><span class="stat-lbl">places</span></div>
     <div class="stat-divider"></div>
-    <div class="stat-pill"><span class="stat-val" id="stat-avg">—</span><span class="stat-lbl">rating medio</span></div>
+    <div class="stat-pill"><span class="stat-val" id="stat-avg">—</span><span class="stat-lbl">avg rating</span></div>
     <div class="stat-divider"></div>
-    <div class="stat-pill"><span class="stat-val" id="stat-top">—</span><span class="stat-lbl">categoría top</span></div>
+    <div class="stat-pill"><span class="stat-val" id="stat-top">—</span><span class="stat-lbl">top category</span></div>
   </section>
+
+  <!-- SEARCH & FILTERS -->
   <section class="search-section">
     <div class="search-wrap">
       <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <circle cx="6.5" cy="6.5" r="5" stroke="#8E8E93" stroke-width="1.5"/>
         <path d="M10.5 10.5L14 14" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      <input class="search-input" id="search" type="search" placeholder="Buscar plato o restaurante…" />
+      <input class="search-input" id="search" type="search" placeholder="Search dish or restaurant…" />
     </div>
     <div class="chip-scroll">
-      <button class="chip active" data-cat="">Todo</button>
-      <button class="chip" data-cat="entrada">🥗 Entrada</button>
-      <button class="chip" data-cat="platoPrincipal">🍽 Principal</button>
-      <button class="chip" data-cat="postre">🎂 Postre</button>
-      <button class="chip" data-cat="bebida">☕ Bebida</button>
+      <button class="chip active" data-cat="">All</button>
+      <button class="chip" data-cat="entrada">🥗 Starter</button>
+      <button class="chip" data-cat="platoPrincipal">🍽 Main</button>
+      <button class="chip" data-cat="postre">🎂 Dessert</button>
+      <button class="chip" data-cat="bebida">☕ Drink</button>
       <button class="chip" data-cat="snack">🍿 Snack</button>
-      <button class="chip" data-cat="otro">✦ Otro</button>
+      <button class="chip" data-cat="otro">✦ Other</button>
     </div>
   </section>
+
+  <!-- GRID -->
   <main class="grid-section">
     <div class="places-grid" id="places-grid"></div>
-    <div class="state-loader" id="state-loader"><div class="loader-ring"></div><p>Cargando…</p></div>
+    <div class="state-loader hidden" id="state-loader"><div class="loader-ring"></div><p>Loading…</p></div>
     <div class="state-empty hidden" id="state-empty">
       <div class="empty-glyph">🍴</div>
-      <h3>Sin lugares aún</h3>
-      <p>Añade tu primer plato favorito.</p>
-      <button class="cta-btn" onclick="openModal()">Empezar</button>
+      <h3>No places yet</h3>
+      <p>Add your first favorite spot.</p>
+      <button class="cta-btn" onclick="openModal()">Get started</button>
+    </div>
+    <div class="state-setup hidden" id="state-setup">
+      <div class="empty-glyph">⚙️</div>
+      <h3>Setup required</h3>
+      <p>Open <strong>app.js</strong> and add your JSONBin.io API Key and Bin ID to start saving places.</p>
+      <a class="cta-btn" href="https://jsonbin.io" target="_blank" rel="noopener">Get free API key →</a>
     </div>
   </main>
+
+  <!-- MODAL -->
   <div class="modal-shell hidden" id="modal" role="dialog" aria-modal="true">
     <div class="modal-scrim" id="modal-scrim"></div>
     <div class="modal-card" id="modal-card">
       <div class="modal-drag-handle"></div>
       <div class="modal-head">
-        <h2 id="modal-title">Nuevo lugar</h2>
-        <button class="icon-btn" id="btn-close" aria-label="Cerrar">
+        <h2 id="modal-title">New place</h2>
+        <button class="icon-btn" id="btn-close" aria-label="Close">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
             <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
@@ -80,24 +98,24 @@
       <form id="place-form" novalidate>
         <input type="hidden" id="place-id" />
         <div class="field-group">
-          <label class="field-label" for="field-name">Plato</label>
-          <input class="field-input" id="field-name" type="text" placeholder="Ej. Tacos al pastor" autocomplete="off" required />
+          <label class="field-label" for="field-name">Dish name</label>
+          <input class="field-input" id="field-name" type="text" placeholder="e.g. Tacos al pastor" autocomplete="off" required />
         </div>
         <div class="field-group">
-          <label class="field-label" for="field-restaurant">Restaurante</label>
-          <input class="field-input" id="field-restaurant" type="text" placeholder="Ej. El Rincón Mexicano" autocomplete="off" required />
+          <label class="field-label" for="field-restaurant">Restaurant</label>
+          <input class="field-input" id="field-restaurant" type="text" placeholder="e.g. El Rincon Mexicano" autocomplete="off" required />
         </div>
         <div class="field-row">
           <div class="field-group">
-            <label class="field-label" for="field-category">Categoría</label>
+            <label class="field-label" for="field-category">Category</label>
             <div class="select-wrap">
               <select class="field-input" id="field-category">
-                <option value="entrada">🥗 Entrada</option>
-                <option value="platoPrincipal" selected>🍽 Principal</option>
-                <option value="postre">🎂 Postre</option>
-                <option value="bebida">☕ Bebida</option>
+                <option value="entrada">🥗 Starter</option>
+                <option value="platoPrincipal" selected>🍽 Main course</option>
+                <option value="postre">🎂 Dessert</option>
+                <option value="bebida">☕ Drink</option>
                 <option value="snack">🍿 Snack</option>
-                <option value="otro">✦ Otro</option>
+                <option value="otro">✦ Other</option>
               </select>
               <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6">
                 <path d="M1 1l4 4 4-4" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" fill="none"/>
@@ -105,7 +123,7 @@
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label">Valoración</label>
+            <label class="field-label">Rating</label>
             <div class="star-row" id="star-picker">
               <button type="button" class="star" data-val="1">★</button>
               <button type="button" class="star" data-val="2">★</button>
@@ -117,24 +135,32 @@
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="field-notes">Notas</label>
-          <textarea class="field-input field-textarea" id="field-notes" rows="3" placeholder="¿Qué lo hace especial?"></textarea>
+          <label class="field-label" for="field-notes">Notes</label>
+          <textarea class="field-input field-textarea" id="field-notes" rows="3" placeholder="What makes it special?"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Ingredientes favoritos</label>
+          <label class="field-label">Favorite ingredients</label>
           <div class="tag-box" id="tag-box">
             <div class="tag-list" id="tag-list"></div>
-            <input class="tag-input" id="tag-input" type="text" placeholder="Escribe y presiona ↵" autocomplete="off" />
+            <input class="tag-input" id="tag-input" type="text" placeholder="Type and press ↵" autocomplete="off" />
           </div>
         </div>
         <div class="modal-actions">
-          <button type="button" class="ghost-btn" id="btn-cancel">Cancelar</button>
-          <button type="submit" class="fill-btn" id="btn-save">Guardar</button>
+          <button type="button" class="ghost-btn" id="btn-cancel">Cancel</button>
+          <button type="submit" class="fill-btn" id="btn-save">Save</button>
         </div>
       </form>
     </div>
   </div>
+
+  <!-- TOAST -->
   <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Made with <span class="heart">♥</span> by Rodrigo Bermudez</p>
+  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
