@@ -4,8 +4,8 @@
 // ============================================
 
 // Configure your JSONBin.io credentials here
-const JSONBIN_API_KEY = 'TU_API_KEY_AQUI';
-const JSONBIN_BIN_ID  = 'TU_BIN_ID_AQUI';
+const JSONBIN_API_KEY = '$2a$10$vn9zCHL4XfO2iTu60MmURunpFsyukhGYuC4.BNkskFjP95GLR.2IO';
+const JSONBIN_BIN_ID  = '6a0326d9250b1311c33c00da';
 const API_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID;
 
 let places = [];
