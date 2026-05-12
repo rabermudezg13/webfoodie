@@ -139,3 +139,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Ne
 .hidden{display:none!important}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:640px){.nav-inner{padding:0 1rem}.hero{padding:3rem 1rem 2.5rem}.stats-bar{margin:0 1rem 1.5rem}.search-section{padding:0 1rem .75rem}.grid-section{padding:.75rem 1rem 4rem}.field-row{grid-template-columns:1fr}.places-grid{grid-template-columns:1fr}}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.site-footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem 3rem;
+  color: var(--label-3);
+  font-size: .8rem;
+  font-weight: 400;
+  letter-spacing: .01em;
+  border-top: 1px solid var(--sep);
+  margin-top: 1rem;
+}
+.site-footer .heart {
+  color: var(--accent);
+  display: inline-block;
+  animation: heartbeat 1.4s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  70% { transform: scale(1); }
+}
+
+/* =============================================
+   SETUP STATE
+   ============================================= */
+.state-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  max-width: 420px;
+  margin: 0 auto;
+  animation: fadeUp .5s var(--out) forwards;
+}
+.state-setup h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -.2px;
+}
+.state-setup p {
+  color: var(--label-2);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.state-setup strong { color: var(--accent); }
+.state-setup .cta-btn {
+  text-decoration: none;
+  display: inline-block;
+}
