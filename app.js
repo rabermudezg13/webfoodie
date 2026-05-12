@@ -13,6 +13,7 @@ let editingId = null;
 let activeCategory = '';
 let modalMap = null;
 let modalMarker = null;
+let _geoResults = [];
 
 // ============================================
 // SETUP CHECK
@@ -126,7 +127,6 @@ function renderGrid(list) {
   </div>
 </div>`;
   }).join('');
-  // Init mini maps on cards
   requestAnimationFrame(() => {
     list.forEach(p => {
       if (!p.lat || !p.lng) return;
@@ -190,6 +190,7 @@ function openModal() {
   document.getElementById('field-lng').value = '';
   document.getElementById('field-address').value = '';
   document.getElementById('loc-suggestions').classList.add('hidden');
+  _geoResults = [];
   renderTagList();
   setStars(3);
   resetModalMap();
@@ -211,11 +212,12 @@ function openEditModal(id) {
   document.getElementById('field-address').value = p.address || '';
   document.getElementById('field-lat').value = p.lat || '';
   document.getElementById('field-lng').value = p.lng || '';
+  _geoResults = [];
   renderTagList();
   setStars(p.rating);
   resetModalMap();
   if (p.lat && p.lng) {
-    setTimeout(() => initModalMap(p.lat, p.lng, p.address || ''), 300);
+    setTimeout(() => initModalMap(p.lat, p.lng), 300);
   }
   showModal();
 }
@@ -264,8 +266,8 @@ async function searchLocation() {
   try {
     const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + encodeURIComponent(q);
     const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
-    const data = await res.json();
-    showSuggestions(data);
+    _geoResults = await res.json();
+    showSuggestions(_geoResults);
   } catch(e) {
     showToast('Location search failed. Try again.');
   } finally {
@@ -281,26 +283,32 @@ function showSuggestions(results) {
     el.classList.remove('hidden');
     return;
   }
-  el.innerHTML = results.map(r =>
-    `<div class="loc-item" onclick="selectLocation(${r.lat}, ${r.lon}, ${JSON.stringify(r.display_name).replace(/'/g, '&apos;')})">
+  el.innerHTML = results.map((r, i) =>
+    `<div class="loc-item" data-idx="${i}">
       <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 1C2.79 1 1 2.79 1 5c0 3 4 7 4 7s4-4 4-7c0-2.21-1.79-4-4-4z" stroke="#8E8E93" stroke-width="1.2"/><circle cx="5" cy="5" r="1.5" stroke="#8E8E93" stroke-width="1.2"/></svg>
       <span>${esc(r.display_name)}</span>
     </div>`
   ).join('');
   el.classList.remove('hidden');
+  // Event delegation — safe, no inline onclick with strings
+  el.onclick = function(e) {
+    const item = e.target.closest('.loc-item');
+    if (!item) return;
+    const idx = parseInt(item.dataset.idx);
+    const r = _geoResults[idx];
+    if (!r) return;
+    const lat = parseFloat(r.lat);
+    const lng = parseFloat(r.lon);
+    const short = r.display_name.split(',').slice(0,3).join(',');
+    document.getElementById('field-lat').value = lat;
+    document.getElementById('field-lng').value = lng;
+    document.getElementById('field-address').value = short;
+    el.classList.add('hidden');
+    initModalMap(lat, lng);
+  };
 }
 
-function selectLocation(lat, lng, displayName) {
-  lat = parseFloat(lat); lng = parseFloat(lng);
-  document.getElementById('field-lat').value = lat;
-  document.getElementById('field-lng').value = lng;
-  const short = displayName.split(',').slice(0,3).join(',');
-  document.getElementById('field-address').value = short;
-  document.getElementById('loc-suggestions').classList.add('hidden');
-  initModalMap(lat, lng, short);
-}
-
-function initModalMap(lat, lng, label) {
+function initModalMap(lat, lng) {
   const el = document.getElementById('modal-map');
   el.classList.remove('hidden');
   if (modalMap) {
@@ -318,7 +326,7 @@ function initModalMap(lat, lng, label) {
       document.getElementById('field-lng').value = ll.lng;
     });
   }
-  setTimeout(() => modalMap.invalidateSize(), 100);
+  setTimeout(() => modalMap.invalidateSize(), 150);
 }
 
 function resetModalMap() {
@@ -362,7 +370,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('btn-cancel').addEventListener('click', closeModal);
   document.getElementById('modal-scrim').addEventListener('click', closeModal);
 
-  // Stars
   document.querySelectorAll('#star-picker .star').forEach(s => {
     s.addEventListener('click', () => {
       const v = parseInt(s.dataset.v);
@@ -371,7 +378,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Tags
   document.getElementById('field-tags').addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -381,10 +387,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Search
   document.getElementById('search').addEventListener('input', applyFilters);
 
-  // Chips
   document.querySelectorAll('.chip').forEach(c => {
     c.addEventListener('click', () => {
       document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
@@ -394,18 +398,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Navbar scroll
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
   });
 
-  // Location search
   document.getElementById('btn-search-loc').addEventListener('click', searchLocation);
   document.getElementById('field-address').addEventListener('keydown', e => {
     if (e.key === 'Enter') { e.preventDefault(); searchLocation(); }
   });
 
-  // Form submit
   document.getElementById('place-form').addEventListener('submit', async e => {
     e.preventDefault();
     const name = document.getElementById('field-name').value.trim();
