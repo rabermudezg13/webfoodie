@@ -325,3 +325,204 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Ne
 .location-search-wrap { display: flex !important; flex-direction: row !important; gap: 8px !important; align-items: stretch !important; }
 .location-search-wrap .field-input { width: auto !important; flex: 1 !important; margin-bottom: 0 !important; }
 .loc-search-btn { display: flex !important; align-items: center !important; justify-content: center !important; }
+
+
+/* ============================================
+   MAPBOX GEOCODER — override default styles
+   ============================================ */
+#geocoder-container .mapboxgl-ctrl-geocoder {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 14px !important;
+  border: 1.5px solid #E5E5EA !important;
+  box-shadow: none !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif !important;
+  font-size: 15px !important;
+  background: #F2F2F7 !important;
+  transition: border-color 0.2s !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder:focus-within {
+  border-color: #FF6B35 !important;
+  background: #fff !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder input {
+  color: #1C1C1E !important;
+  font-size: 15px !important;
+  background: transparent !important;
+  padding: 10px 44px 10px 42px !important;
+  height: 44px !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder input::placeholder {
+  color: #8E8E93 !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder--icon-search {
+  fill: #8E8E93 !important;
+  top: 14px !important;
+  left: 12px !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder--button {
+  background: transparent !important;
+  top: 10px !important;
+  right: 8px !important;
+}
+#geocoder-container .suggestions {
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+  border: none !important;
+  margin-top: 6px !important;
+}
+#geocoder-container .suggestions li a {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 13px !important;
+  color: #1C1C1E !important;
+  padding: 10px 14px !important;
+}
+#geocoder-container .suggestions li.active a,
+#geocoder-container .suggestions li a:hover {
+  background: #F2F2F7 !important;
+  color: #1C1C1E !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder--suggestion-title {
+  font-weight: 500 !important;
+}
+#geocoder-container .mapboxgl-ctrl-geocoder--suggestion-address {
+  color: #8E8E93 !important;
+  font-size: 12px !important;
+}
+
+/* ============================================
+   MODAL MAP — Mapbox GL
+   ============================================ */
+.modal-map {
+  margin-top: 10px;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 220px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  position: relative;
+}
+.modal-map .mapboxgl-canvas { border-radius: 16px; }
+.modal-map .mapboxgl-ctrl-group {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+.modal-map .mapboxgl-ctrl-group button {
+  width: 32px !important; height: 32px !important;
+}
+
+/* ============================================
+   CUSTOM ANIMATED MARKER
+   ============================================ */
+.custom-marker {
+  position: relative;
+  width: 36px;
+  height: 44px;
+  cursor: grab;
+}
+.custom-marker:active { cursor: grabbing; }
+.marker-pin {
+  width: 28px;
+  height: 28px;
+  background: #FF6B35;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 4px 12px rgba(255,107,53,0.45);
+  position: absolute;
+  top: 0; left: 4px;
+  animation: markerDrop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.marker-pulse {
+  width: 14px;
+  height: 6px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 11px;
+  animation: markerDrop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  filter: blur(2px);
+  transform-origin: center;
+}
+@keyframes markerDrop {
+  from { transform: translateY(-30px) rotate(-45deg); opacity: 0; }
+  to   { transform: translateY(0)     rotate(-45deg); opacity: 1; }
+}
+.marker-pulse {
+  animation: pulseDrop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes pulseDrop {
+  from { transform: scaleX(0.3); opacity: 0; }
+  to   { transform: scaleX(1);   opacity: 1; }
+}
+
+/* Drag hint label */
+.modal-map::after {
+  content: 'Drag to adjust';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  letter-spacing: 0.2px;
+}
+
+/* ============================================
+   CARD MAP — mini Mapbox map
+   ============================================ */
+.card-map-wrap {
+  margin-top: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+}
+.card-map {
+  height: 150px;
+  width: 100%;
+  pointer-events: none;
+}
+.card-map-link {
+  display: block;
+  background: rgba(0,0,0,0.04);
+  text-align: center;
+  font-size: 12px;
+  color: #FF6B35;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 7px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  transition: background 0.15s;
+}
+.card-map-link:hover { background: rgba(0,0,0,0.08); }
+
+/* Address chip on card */
+.card-address {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #8E8E93;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* Shrink Mapbox attribution */
+.mapboxgl-ctrl-attrib { font-size: 9px !important; opacity: 0.5; }
+.mapboxgl-ctrl-logo   { display: none !important; }
+
+/* field-optional label */
+.field-optional {
+  font-size: 11px;
+  color: #8E8E93;
+  font-weight: 400;
+  margin-left: 4px;
+}
