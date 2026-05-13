@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Foodie</title>
 <link rel="stylesheet" href="style.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Mapbox GL JS -->
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+<!-- Mapbox Geocoder -->
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.css" />
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>
 </head>
 <body>
 
@@ -79,7 +83,7 @@
   <div class="state-setup hidden" id="state-setup">
     <div class="empty-glyph">⚙️</div>
     <h3>Setup required</h3>
-    <p>Open <strong>app.js</strong> and add your JSONBin.io API Key and Bin ID to start saving places.</p>
+    <p>Open <strong>app.js</strong> and add your JSONBin.io API Key and Bin ID.</p>
     <a class="cta-btn" href="https://jsonbin.io" target="_blank" rel="noopener">Get free API key →</a>
   </div>
 </main>
@@ -99,14 +103,17 @@
     </div>
     <form id="place-form" novalidate>
       <input type="hidden" id="place-id" />
+
       <div class="field-group">
         <label class="field-label" for="field-name">Dish name</label>
         <input class="field-input" id="field-name" type="text" placeholder="e.g. Tacos al pastor" autocomplete="off" required />
       </div>
+
       <div class="field-group">
         <label class="field-label" for="field-restaurant">Restaurant</label>
         <input class="field-input" id="field-restaurant" type="text" placeholder="e.g. El Rincon Mexicano" autocomplete="off" required />
       </div>
+
       <div class="field-row">
         <div class="field-group">
           <label class="field-label" for="field-category">Category</label>
@@ -136,10 +143,12 @@
           <input type="hidden" id="field-rating" value="3" />
         </div>
       </div>
+
       <div class="field-group">
         <label class="field-label" for="field-notes">Notes</label>
         <textarea class="field-input" id="field-notes" rows="2" placeholder="What made it special?"></textarea>
       </div>
+
       <div class="field-group">
         <label class="field-label" for="field-tags">Favorite ingredients</label>
         <div class="tag-input-wrap">
@@ -148,22 +157,14 @@
         <div class="tag-list" id="tag-list"></div>
       </div>
 
-      <!-- LOCATION FIELD -->
+      <!-- LOCATION -->
       <div class="field-group">
-        <label class="field-label" for="field-address">📍 Location</label>
-        <div class="location-search-wrap">
-          <input class="field-input" id="field-address" type="text" placeholder="Search address or place name…" autocomplete="off" />
-          <button type="button" class="loc-search-btn" id="btn-search-loc">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-        <div id="loc-suggestions" class="loc-suggestions hidden"></div>
+        <label class="field-label">📍 Location <span class="field-optional">optional</span></label>
+        <div id="geocoder-container"></div>
         <div id="modal-map" class="modal-map hidden"></div>
         <input type="hidden" id="field-lat" />
         <input type="hidden" id="field-lng" />
+        <input type="hidden" id="field-address" />
       </div>
 
       <div class="modal-actions">
