@@ -1,162 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Foodie</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Mapbox GL JS -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
-    <!-- Mapbox Geocoder -->
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.css" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foodie</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.css" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>
+</head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
-      <div class="nav-inner">
-            <div class="nav-brand">
-                    <span class="nav-icon">🍽️</span>span>
-                    <span class="nav-title">Foodie</span>span>
-            </div>div>
-            <button class="nav-btn" id="add-btn">+ Add Place</button>button>
-      </div>div>
-  </nav>nav>
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="nav-icon">&#x1F37D;</span>
+      <span class="nav-title">Foodie</span>
+    </div>
+    <button class="nav-btn" id="add-btn">+ Add Place</button>
+  </div>
+</nav>
 
-  <!-- LOADER -->
-  <div id="loader" class="loader hidden">
-      <div class="spinner"></div>div>
-  </div>div>
+<div id="loader" class="loader hidden">
+  <div class="spinner"></div>
+</div>
 
-  <!-- SETUP STATE -->
-  <div id="state-setup" class="state-box hidden">
-      <div class="state-icon">⚙️</div>div>
-      <h2>Setup Required</h2>
-    <p>Open <code>app.js</code> and fill in your JSONBin API key and Bin ID.</p>
-  </div>div>
+<div id="state-setup" class="state-box hidden">
+  <div class="state-icon">&#x2699;&#xFE0F;</div>
+  <h2>Setup Required</h2>
+  <p>Open <code>app.js</code> and fill in your JSONBin API key and Bin ID.</p>
+</div>
 
-<!-- MAIN -->
 <main class="main-content">
 
-  <!-- STATS BAR -->
   <div class="stats-bar">
-      <div class="stat-item">
-            <span class="stat-num" id="stat-total">0</span>span>
-            <span class="stat-label">Places</span>span>
-      </div>div>
-      <div class="stat-item">
-            <span class="stat-num" id="stat-avg">—</span>span>
-            <span class="stat-label">Avg Rating</span>span>
-      </div>div>
-      <div class="stat-item">
-            <span class="stat-num" id="stat-top">—</span>span>
-            <span class="stat-label">Top Category</span>span>
-      </div>div>
-  </div>div>
+    <div class="stat-item">
+      <span class="stat-num" id="stat-total">0</span>
+      <span class="stat-label">Places</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="stat-avg">&#x2014;</span>
+      <span class="stat-label">Avg Rating</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="stat-top">&#x2014;</span>
+      <span class="stat-label">Top Category</span>
+    </div>
+  </div>
 
-  <!-- SEARCH & FILTER -->
   <div class="search-filter-row">
-      <input type="text" id="search-input" class="search-input" placeholder="Search places…" />
-  </div>div>
+    <input type="text" id="search-input" class="search-input" placeholder="Search places..." />
+  </div>
 
   <div class="chips-row">
-      <button class="chip active" data-cat="">All</button>button>
-      <button class="chip" data-cat="Restaurant">Restaurant</button>button>
-      <button class="chip" data-cat="Cafe">Cafe</button>button>
-      <button class="chip" data-cat="Bar">Bar</button>button>
-      <button class="chip" data-cat="Bakery">Bakery</button>button>
-      <button class="chip" data-cat="Street Food">Street Food</button>button>
-      <button class="chip" data-cat="Other">Other</button>button>
-  </div>div>
+    <button class="chip active" data-cat="">All</button>
+    <button class="chip" data-cat="Restaurant">Restaurant</button>
+    <button class="chip" data-cat="Cafe">Cafe</button>
+    <button class="chip" data-cat="Bar">Bar</button>
+    <button class="chip" data-cat="Bakery">Bakery</button>
+    <button class="chip" data-cat="Street Food">Street Food</button>
+    <button class="chip" data-cat="Other">Other</button>
+  </div>
 
-  <!-- EMPTY STATE -->
   <div id="state-empty" class="state-box hidden">
-      <div class="state-icon">🍕</div>div>
-      <h2>No places yet</h2>
-      <p>Tap <strong>+ Add Place</strong> to start your foodie list!</p>
-  </div>div>
+    <div class="state-icon">&#x1F355;</div>
+    <h2>No places yet</h2>
+    <p>Tap <strong>+ Add Place</strong> to start your foodie list!</p>
+  </div>
 
-  <!-- GRID -->
-  <div class="places-grid" id="places-grid"></div>div>
+  <div class="places-grid" id="places-grid"></div>
 
-</main>main>
+</main>
 
-<!-- FOOTER -->
 <footer class="footer">
-  <span class="footer-heart">Made with <span class="heart">♥</span>span> by Rodrigo Bermudez</span>span>
-</footer>footer>
+  <span class="footer-heart">Made with <span class="heart">&#x2665;</span> by Rodrigo Bermudez</span>
+</footer>
 
-<!-- MODAL -->
 <div id="place-modal" class="modal-overlay hidden">
   <div class="modal-card">
-      <div class="modal-header">
-            <h2 class="modal-title" id="modal-title">Add Place</h2>
-            <button class="modal-close" id="modal-close">✕</button>button>
-      </div>div>
-  
-      <form id="place-form" class="modal-form">
-      
-            <label class="form-label">Name *</label>label>
-            <input type="text" id="place-name" class="form-input" placeholder="Dish or spot name" required />
-      
-            <label class="form-label">Restaurant / Place</label>label>
-            <input type="text" id="place-restaurant" class="form-input" placeholder="Restaurant name" />
-      
-            <label class="form-label">Category</label>label>
-            <select id="place-category" class="form-input">
-                    <option>Restaurant</option>
-                    <option>Cafe</option>
-                    <option>Bar</option>
-                    <option>Bakery</option>
-                    <option>Street Food</option>
-                    <option>Other</option>
-            </select>select>
-      
-            <label class="form-label">Rating</label>label>
-            <div class="star-picker">
-                    <button type="button" class="star-btn" data-value="1">★</button>button>
-                    <button type="button" class="star-btn" data-value="2">★</button>button>
-                    <button type="button" class="star-btn" data-value="3">★</button>button>
-                    <button type="button" class="star-btn" data-value="4">★</button>button>
-                    <button type="button" class="star-btn" data-value="5">★</button>button>
-            </div>div>
-      
-            <label class="form-label">Price Range</label>label>
-            <div class="price-picker">
-                    <button type="button" class="price-btn" data-value="budget">$ Budget</button>button>
-                    <button type="button" class="price-btn" data-value="moderate">$$ Moderate</button>button>
-                    <button type="button" class="price-btn" data-value="expensive">$$$ Pricey</button>button>
-                    <button type="button" class="price-btn" data-value="luxury">$$$$ Luxury</button>button>
-            </div>div>
-      
-            <label class="form-label">Notes</label>label>
-            <textarea id="place-notes" class="form-input form-textarea" placeholder="What did you think?"></textarea>
-      
-            <label class="form-label">Location</label>label>
-            <div id="geocoder-container" class="geocoder-wrap"></div>div>
-            <input type="hidden" id="place-address" />
-            <input type="hidden" id="place-lat" />
-            <input type="hidden" id="place-lng" />
-            <div id="modal-map" class="modal-map-box"></div>div>
-            <p class="map-hint">📍 Drag the pin to fine-tune the location</p>
-      
-            <label class="form-label">Tags <span class="form-hint">(press Enter or comma)</span>span></label>label>
-            <input type="text" id="tag-input" class="form-input" placeholder="e.g. tacos, date night" />
-            <div id="tag-list" class="tag-list"></div>div>
-      
-            <button type="submit" class="btn-primary">Save Place</button>button>
-      
-      </form>form>
-  </div>div>
-</div>div>
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Add Place</h2>
+      <button class="modal-close" id="modal-close">&#x2715;</button>
+    </div>
+    <form id="place-form" class="modal-form">
 
-<!-- TOAST -->
-<div id="toast" class="toast hidden"></div>div>
+      <label class="form-label">Name *</label>
+      <input type="text" id="place-name" class="form-input" placeholder="Dish or spot name" required />
+
+      <label class="form-label">Restaurant / Place</label>
+      <input type="text" id="place-restaurant" class="form-input" placeholder="Restaurant name" />
+
+      <label class="form-label">Category</label>
+      <select id="place-category" class="form-input">
+        <option>Restaurant</option>
+        <option>Cafe</option>
+        <option>Bar</option>
+        <option>Bakery</option>
+        <option>Street Food</option>
+        <option>Other</option>
+      </select>
+
+      <label class="form-label">Rating</label>
+      <div class="star-picker">
+        <button type="button" class="star-btn" data-value="1">&#x2605;</button>
+        <button type="button" class="star-btn" data-value="2">&#x2605;</button>
+        <button type="button" class="star-btn" data-value="3">&#x2605;</button>
+        <button type="button" class="star-btn" data-value="4">&#x2605;</button>
+        <button type="button" class="star-btn" data-value="5">&#x2605;</button>
+      </div>
+
+      <label class="form-label">Price Range</label>
+      <div class="price-picker">
+        <button type="button" class="price-btn" data-value="budget">$ Budget</button>
+        <button type="button" class="price-btn" data-value="moderate">$$ Moderate</button>
+        <button type="button" class="price-btn" data-value="expensive">$$$ Pricey</button>
+        <button type="button" class="price-btn" data-value="luxury">$$$$ Luxury</button>
+      </div>
+
+      <label class="form-label">Notes</label>
+      <textarea id="place-notes" class="form-input form-textarea" placeholder="What did you think?"></textarea>
+
+      <label class="form-label">Location</label>
+      <div id="geocoder-container" class="geocoder-wrap"></div>
+      <input type="hidden" id="place-address" />
+      <input type="hidden" id="place-lat" />
+      <input type="hidden" id="place-lng" />
+      <div id="modal-map" class="modal-map-box"></div>
+      <p class="map-hint">&#x1F4CD; Drag the pin to fine-tune the location</p>
+
+      <label class="form-label">Tags <span class="form-hint">(press Enter or comma)</span></label>
+      <input type="text" id="tag-input" class="form-input" placeholder="e.g. tacos, date night" />
+      <div id="tag-list" class="tag-list"></div>
+
+      <button type="submit" class="btn-primary">Save Place</button>
+
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
 
 <script src="app.js"></script>
 </body>
-</html>html></option></option></strong></code></p></h2>
-</body></title>
-  </head>
+</html>
